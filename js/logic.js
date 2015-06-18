@@ -104,6 +104,10 @@ function getWeather(url, forecast) {
     httpRequest.send();
 }
 
+function getLocation() {
+
+}
+
 startTime();
 getWeather("http://api.openweathermap.org/data/2.5/weather?mode=json&units=metric&lang=en&id=2838534", false);
 getWeather("http://api.openweathermap.org/data/2.5/forecast/daily?cnt=3&mode=json&units=metric&lang=en&id=2838534", true);
