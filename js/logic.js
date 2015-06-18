@@ -19,9 +19,12 @@ function startTime() {
 
 function days() {
     "use strict";
-    var d = new Date();
-    var weekday = new Array(7);
-    weekday[0]=  "Sunday";
+    var d = new Date(),
+        weekday = new Array(7),
+        weekdays = [];
+
+
+    weekday[0] = "Sunday";
     weekday[1] = "Monday";
     weekday[2] = "Tuesday";
     weekday[3] = "Wednesday";
@@ -29,11 +32,10 @@ function days() {
     weekday[5] = "Friday";
     weekday[6] = "Saturday";
 
-    var weekdays = [];
-        weekdays[0]= weekday[d.getDay()];
-        weekdays[1]= weekday[d.getDay() + 1];
-        weekdays[2]= weekday[d.getDay() + 2];
-        weekdays[3]= weekday[d.getDay() + 3];
+    weekdays[0] = weekday[d.getDay()];
+    weekdays[1] = weekday[d.getDay() + 1];
+    weekdays[2] = weekday[d.getDay() + 2];
+    weekdays[3] = weekday[d.getDay() + 3];
 
     return weekdays;
 }
