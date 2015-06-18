@@ -87,7 +87,7 @@ function parseWeather() {
     }
 }
 
-function getWeather(url, lat, lon, forecast) {
+function getWeather(url, forecast) {
     "use strict";
     /*
      * !Get it, fill it
@@ -96,8 +96,15 @@ function getWeather(url, lat, lon, forecast) {
      *
      */
 
-    var httpRequest = new XMLHttpRequest();
+    var httpRequest = new XMLHttpRequest(),
+        position = getLocation(),
+        latitude  = position.coords.latitude,
+        longitude = position.coords.longitude;
 
+    /* TODO
+    httpRequest.custom_latitude = latitude;
+    httpRequest.custom_longitude = longitude;
+    */
     httpRequest.custom_forecast = forecast;
     httpRequest.onload = parseWeather;
     httpRequest.open('GET', url);
@@ -112,11 +119,8 @@ function getLocation() {
     }
 
    function success(position) {
-        var latitude  = position.coords.latitude,
-            longitude = position.coords.longitude;
-
-        return latitude,longitude;
-        console.log(latitude);
+        return position;
+        console.log(position);
     }
 
     function error() {
@@ -125,7 +129,6 @@ function getLocation() {
     navigator.geolocation.getCurrentPosition(success,error);
 }
 
-getLocation();
 startTime();
 getWeather("http://api.openweathermap.org/data/2.5/weather?mode=json&units=metric&lang=en&id=2838534", false);
 getWeather("http://api.openweathermap.org/data/2.5/forecast/daily?cnt=3&mode=json&units=metric&lang=en&id=2838534", true);
