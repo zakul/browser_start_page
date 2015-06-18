@@ -87,7 +87,7 @@ function parseWeather() {
     }
 }
 
-function getWeather(url, forecast) {
+function getWeather(url, lat, lon, forecast) {
     "use strict";
     /*
      * !Get it, fill it
@@ -105,9 +105,27 @@ function getWeather(url, forecast) {
 }
 
 function getLocation() {
+    "use strict";
 
+    if (!navigator.geolocation) {
+        return;
+    }
+
+   function success(position) {
+        var latitude  = position.coords.latitude,
+            longitude = position.coords.longitude;
+
+        return latitude,longitude;
+        console.log(latitude);
+    }
+
+    function error() {
+        console.log("Unable to retrieve your location");
+    }
+    navigator.geolocation.getCurrentPosition(success,error);
 }
 
+getLocation();
 startTime();
 getWeather("http://api.openweathermap.org/data/2.5/weather?mode=json&units=metric&lang=en&id=2838534", false);
 getWeather("http://api.openweathermap.org/data/2.5/forecast/daily?cnt=3&mode=json&units=metric&lang=en&id=2838534", true);
