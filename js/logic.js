@@ -122,6 +122,12 @@ function getWeather(url, forecast) {
 function getLocation() {
     "use strict";
 
+    var geo_options = {
+      enableHighAccuracy: true,
+      maximumAge        : 30000,
+      timeout           : 27000
+    };
+
     if (!navigator.geolocation) {
         return;
     }
@@ -131,8 +137,8 @@ function getLocation() {
         var lat = position.coords.latitude ,
             lon = position.coords.longitude;
 
-        getWeather("http://api.openweathermap.org/data/2.5/weather?mode=json&units=metric&lang=en&lat=" + lat + "&lon=" + lon + "", false);
-        getWeather("http://api.openweathermap.org/data/2.5/forecast/daily?cnt=3&mode=json&units=metric&lang=en&lat=" + lat  + "&lon=" + lon  + "", true);
+        getWeather("http://api.openweathermap.org/data/2.5/weather?mode=json&units=metric&lang=de&lat=" + lat + "&lon=" + lon + "", false);
+        getWeather("http://api.openweathermap.org/data/2.5/forecast/daily?cnt=3&mode=json&units=metric&lang=de&lat=" + lat  + "&lon=" + lon  + "", true);
         return position;
     }
 
@@ -140,7 +146,7 @@ function getLocation() {
         console.log("Unable to retrieve your location");
     }
 
-    navigator.geolocation.getCurrentPosition(success,error);
+    navigator.geolocation.getCurrentPosition(success, error, geo_options);
 }
 
 
