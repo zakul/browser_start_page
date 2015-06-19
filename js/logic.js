@@ -12,6 +12,7 @@ function startTime() {
         h = today.getHours(),
         m = today.getMinutes(),
         t;
+
     m = checkTime(m);
     document.getElementById('clock').innerHTML = h + ":" + m;
     t = setTimeout(function(){startTime();},1000);
@@ -19,10 +20,10 @@ function startTime() {
 
 function days() {
     "use strict";
-    var d = new Date(),
+    var date = new Date(),
+        day = date.getDay(),
         weekday = new Array(7),
         weekdays = [];
-
 
     weekday[0] = "Sunday";
     weekday[1] = "Monday";
@@ -32,16 +33,26 @@ function days() {
     weekday[5] = "Friday";
     weekday[6] = "Saturday";
 
-    weekdays[0] = weekday[d.getDay()];
-    weekdays[1] = weekday[d.getDay() + 1];
-    weekdays[2] = weekday[d.getDay() + 2];
-    weekdays[3] = weekday[d.getDay() + 3];
+    function dayHelper(plusDay) {
+        var allDay = day + plusDay;
+        if(allDay >= weekday.length) {
+            var newDay = allDay - weekday.length;
+            return newDay;
+        } else {
+            return allDay;
+        }
+    }
+
+    weekdays[0] = weekday[day];
+    weekdays[1] = weekday[dayHelper(1)];
+    weekdays[2] = weekday[dayHelper(2)];
+    weekdays[3] = weekday[dayHelper(3)];
 
     return weekdays;
 }
 
 function parseWeather() {
-    //Todo: Icons, forecast
+    //Todo: Icons
     "use strict";
     if (this.readyState === 4) {
         if (this.status === 200) {
@@ -57,9 +68,9 @@ function parseWeather() {
                 td_days[1].textContent = weekdays[2];
                 td_days[2].textContent = weekdays[3];
 
-                td_icons[0].innerHTML = '<i class="wi wi-' + weather.list[0].weather[0].icon + '"></i>';
-                td_icons[1].innerHTML = '<i class="wi wi-' + weather.list[0].weather[0].icon + '"></i>';
-                td_icons[2].innerHTML = '<i class="wi wi-' + weather.list[0].weather[0].icon + '"></i>';
+                td_icons[0].innerHTML = '<i class="wi wi-' + weather.list[0].weather[0].id + weather.list[0].weather[0].icon.slice(-1) + '"></i>';
+                td_icons[1].innerHTML = '<i class="wi wi-' + weather.list[0].weather[0].id + weather.list[0].weather[0].icon.slice(-1) + '"></i>';
+                td_icons[2].innerHTML = '<i class="wi wi-' + weather.list[0].weather[0].id + weather.list[0].weather[0].icon.slice(-1) + '"></i>';
 
                 td_maxs[0].textContent = Math.round(weather.list[0].temp.max) + "°C";
                 td_maxs[1].textContent = Math.round(weather.list[1].temp.max) + "°C";
@@ -77,7 +88,7 @@ function parseWeather() {
                 document.getElementById('weather_current_text').textContent = weather.weather[0].description;
                 document.getElementById('weather_current_day').textContent = weekdays[0];
 
-                document.getElementById('weather_current_icon').innerHTML = '<i class="wi wi-' + weather.weather[0].icon + '"></i>';
+                document.getElementById('weather_current_icon').innerHTML = '<i class="wi wi-' + weather.weather[0].id + weather.weather[0].icon.slice(-1) + '"></i>';
 
                 console.log("daily");
                 console.log(weather);
@@ -91,20 +102,17 @@ function getWeather(url, forecast) {
     "use strict";
     /*
      * !Get it, fill it
+     * City code
      * http://api.openweathermap.org/data/2.5/weather?mode=json&units=metric&lang=en&id=2838534
      * http://api.openweathermap.org/data/2.5/forecast/daily?cnt=3&mode=json&units=metric&lang=en&id=2838534
+     * City geolocation
+     * http://api.openweathermap.org/data/2.5/weather?mode=json&units=metric&lang=en&lat=52.5221879&lon=13.4093313
+     * http://api.openweathermap.org/data/2.5/forecast/daily?cnt=3&mode=json&units=metric&lang=en&lat=52.5221879&lon=13.4093313
      *
      */
 
-    var httpRequest = new XMLHttpRequest(),
-        position = getLocation(),
-        latitude  = position.coords.latitude,
-        longitude = position.coords.longitude;
+    var httpRequest = new XMLHttpRequest();
 
-    /* TODO
-    httpRequest.custom_latitude = latitude;
-    httpRequest.custom_longitude = longitude;
-    */
     httpRequest.custom_forecast = forecast;
     httpRequest.onload = parseWeather;
     httpRequest.open('GET', url);
@@ -118,17 +126,27 @@ function getLocation() {
         return;
     }
 
-   function success(position) {
-        return position;
+    function success(position) {
         console.log(position);
+        var lat = position.coords.latitude ,
+            lon = position.coords.longitude;
+
+        getWeather("http://api.openweathermap.org/data/2.5/weather?mode=json&units=metric&lang=en&lat=" + lat + "&lon=" + lon + "", false);
+        getWeather("http://api.openweathermap.org/data/2.5/forecast/daily?cnt=3&mode=json&units=metric&lang=en&lat=" + lat  + "&lon=" + lon  + "", true);
+        return position;
     }
 
     function error() {
         console.log("Unable to retrieve your location");
     }
+
     navigator.geolocation.getCurrentPosition(success,error);
 }
 
+
+getLocation();
+//console.log(position.longitude);
+//console.log(position.longitude);
+
 startTime();
-getWeather("http://api.openweathermap.org/data/2.5/weather?mode=json&units=metric&lang=en&id=2838534", false);
-getWeather("http://api.openweathermap.org/data/2.5/forecast/daily?cnt=3&mode=json&units=metric&lang=en&id=2838534", true);
+
