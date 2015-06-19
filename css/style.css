@@ -1,4 +1,4 @@
-/*FORMATIERUNG*/
+/* FORMATTING */
 
 @font-face {
     font-family: entypo;
@@ -153,7 +153,7 @@ p.center {
     display:block;
 }
 
-/*SEITE*/
+/* SITE */
 
 #bg {
     z-index: -1;
@@ -184,16 +184,6 @@ p.center {
     padding-top: 3em;
 }
 
-/*grid {*/
-    /*padding: 2%;*/
-    /*/**/
-    /*width: 20%;*/
-    /*min-width: 250px;*/
-    /*box-shadow: rgba(0, 0, 0, 0.4) 0 1px 2px 0;*/
-    /**/
-    /*border-left: 1px solid #E3E3E3;*/
-/*}*/
-
 #footer {
 }
 
@@ -205,7 +195,7 @@ p.center {
     padding: 2%;
 }
 
-/*LINKS*/
+/* LINKS */
 
 .linksbox {
     -webkit-box-shadow: 0px 0px 2px 0px #000;
@@ -256,9 +246,10 @@ a:hover {
 #s05 a:hover {
     color: #c5bbbb;
 }
-/*NAVIGATION*/
 
-/*INHALT*/
+/* NAVIGATION */
+
+/* CONTENT */
 
 img {
     border: 1px solid #666666;
@@ -275,7 +266,7 @@ a img:hover {
     margin: 20px 0 0 0;
 }
 
-/*EFFEKTE*/
+/*EFFECTS*/
 
 .rounded {
     border-radius: 3px;
@@ -290,7 +281,7 @@ a img:hover {
 
 }
 
-/*ICON*/
+/* ICONS */
 
 .icon {
     font-family: 'entypo';
@@ -302,20 +293,20 @@ a img:hover {
     font-size: 2em;
 }
 
-/*MEDIA QUERIES*/
+/* MEDIA QUERIES */
 
-/*WHATEVER*/
+/* WHATEVER */
 
 .section-full {
     height: 100vh;
 }
 
-/* Clock */
+/* WEATHER */
 
 #weather_out {
     width: 20%;
     position: absolute;
-    background-color: #ff4444;
+    /*background-color: #ff4444;*/
     bottom: 0;
     right: 0;
     text-align: center;
@@ -341,7 +332,15 @@ a img:hover {
     width: 100%;
 }
 
-/* Font */
+#weather_current_text {
+    font-size: 0.6em;
+}
+
+/* FONT */
+/*
+ * https://github.com/erikflowers/weather-icons
+ * http://openweathermap.org/weather-conditions
+ * */
 
 .wi {
     display: inline-block;
