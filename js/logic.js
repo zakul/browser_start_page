@@ -134,11 +134,12 @@ function getLocation() {
 
     function success(position) {
         console.log(position);
-        var lat = position.coords.latitude ,
+        var url = "http://api.openweathermap.org/data/2.5/",
+            lat = position.coords.latitude ,
             lon = position.coords.longitude;
 
-        getWeather("http://api.openweathermap.org/data/2.5/weather?mode=json&units=metric&lang=de&lat=" + lat + "&lon=" + lon + "", false);
-        getWeather("http://api.openweathermap.org/data/2.5/forecast/daily?cnt=3&mode=json&units=metric&lang=de&lat=" + lat  + "&lon=" + lon  + "", true);
+        getWeather("" + url + "weather?mode=json&units=metric&lang=de&lat=" + lat + "&lon=" + lon + "", false);
+        getWeather("" + url + "forecast/daily?cnt=3&mode=json&units=metric&lang=de&lat=" + lat  + "&lon=" + lon  + "", true);
         return position;
     }
 
@@ -151,8 +152,5 @@ function getLocation() {
 
 
 getLocation();
-//console.log(position.longitude);
-//console.log(position.longitude);
-
 startTime();
 
